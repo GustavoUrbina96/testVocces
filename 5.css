@@ -1,0 +1,142 @@
+.container {
+  font-family: Calibri;
+  position: relative;
+}
+
+.list-container {
+  position: absolute;
+  left: 50px;
+  width: 80%;
+}
+
+.card-container {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 32px;
+  cursor: pointer;
+}
+
+.card-container:hover {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.card-avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  float: left;
+  margin-right: 16px;
+}
+
+.card-item {
+  margin: 0;
+}
+
+.card-info-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-content::after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.modal-container {
+  padding: 16px;
+  background-color: ghostwhite;
+  position: absolute;
+  right: 0;
+  width: 40%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  animation: open 1s ease-in-out;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes open {
+  0% {
+    right: -100%;
+  }
+  100% {
+    right: 20%;
+    transform: translateX(50%);
+  }
+}
+
+hr {
+  margin: 16;
+  width: 100%;
+  border: 0;
+  height: 1px;
+  text-align: center;
+  background-color: #ccc;
+}
+
+.modal-general-info-container {
+  display: flex;
+  width: 100%;
+}
+
+.modal-avatar-cotainer {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.modal-avatar {
+  vertical-align: middle;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid #ccc;
+  float: left;
+}
+
+.modal-user-info-container {
+  margin-left: 16px;
+}
+
+h3 {
+  margin-block: 0;
+  white-space: nowrap;
+}
+
+h4 {
+  margin-block: 0;
+  white-space: nowrap;
+}
+
+.modal-address-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.modal-company-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.modal-company-container h4 {
+  margin-block: 0;
+  white-space: inherit;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+}

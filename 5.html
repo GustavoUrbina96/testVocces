@@ -1,16 +1,212 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="5.css" rel="stylesheet" />
     <title>Ejercicio 5</title>
-</head>
-<body>
-    <article>
-        <h1>Listado de usuarios</h1>
-        <p>Queremos mostrar el listado de usarios que existen en nuestro sistema y que al hacer click sobre uno de ellos nos muestre la información del usuario.</p>
-        <p>Para obtener el listado de usuarios el backend nos ha proporcionado el siguiente endpoint <a href="https://jsonplaceholder.typicode.com/users" target="_blank">Users</a>.</p>
-    </article>
-</body>
+  </head>
+  <body class="container">
+    <div class="list-container">
+      <ul id="user-list"></ul>
+    </div>
+
+    <div id="modal-details"></div>
+
+    <script>
+      const modalContainer = document.getElementById("modal-details");
+      modalContainer.innerHTML = "";
+
+      // document.addEventListener("click", (event) => {
+      //   if (
+      //     event.target !== modalContainer &&
+      //     modalContainer.style.display !== "none"
+      //   ) {
+      //     modalContainer.style.display = "none";
+      //   } else {
+      //     modalContainer.style.display !== "flex";
+      //   }
+      // });
+
+      const xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          createUserList(JSON.parse(this.responseText));
+        }
+      };
+
+      xhttp.open("GET", "https://jsonplaceholder.typicode.com/users", true);
+      xhttp.send();
+
+      const createUserList = (users) => {
+        const cardList = document.getElementById("user-list");
+        users.forEach((user) => {
+          const li = document.createElement("li");
+          li.classList.add("card-container");
+          li.addEventListener("click", () => createModal(user));
+
+          const content = document.createElement("div");
+          content.classList.add("card-content");
+
+          const avatar = document.createElement("img");
+          avatar.src = "https://xsgames.co/randomusers/avatar.php?g=male";
+          avatar.classList.add("card-avatar");
+          content.appendChild(avatar);
+
+          const infoContainer = document.createElement("div");
+          infoContainer.classList.add("card-info-container");
+          content.appendChild(infoContainer);
+
+          const name = document.createElement("h3");
+          name.textContent = user.name;
+          name.classList.add("card-item");
+          infoContainer.appendChild(name);
+
+          const email = document.createElement("p");
+          email.textContent = user.email;
+          email.classList.add("card-item");
+          infoContainer.appendChild(email);
+
+          li.appendChild(content);
+          cardList.appendChild(li);
+        });
+      };
+
+      const createModal = (user) => {
+        console.log("userData: ", user);
+        modalContainer.innerHTML = "";
+        modalContainer.classList.add("modal-container");
+
+        createUserGeneralSection(user);
+        createUserAddressSection(user.address);
+        createUserCompanySection(user.company);
+      };
+
+      const createUserGeneralSection = (user) => {
+        const userGeneralSection = document.createElement("div");
+        userGeneralSection.classList.add("modal-general-info-container");
+
+        const imgContainer = document.createElement("div");
+        imgContainer.classList.add("modal-avatar-cotainer");
+        const avatar = document.createElement("img");
+        avatar.src = "https://xsgames.co/randomusers/avatar.php?g=male";
+        avatar.classList.add("modal-avatar");
+        imgContainer.appendChild(avatar);
+
+        const userInfo = document.createElement("div");
+        userInfo.classList.add("modal-user-info-container");
+
+        const userName = document.createElement("h3");
+        userName.textContent = user.name;
+        userInfo.appendChild(userName);
+
+        const userEmail = document.createElement("h4");
+        userEmail.textContent = user.email;
+        userInfo.appendChild(userEmail);
+
+        const userPhone = document.createElement("h4");
+        userPhone.textContent = "Phone: " + user.phone;
+        userInfo.appendChild(userPhone);
+
+        const userId = document.createElement("h4");
+        userId.textContent = "User id: " + user.id;
+        userInfo.appendChild(userId);
+
+        const userUserName = document.createElement("h4");
+        userUserName.textContent = "User name: " + user.username;
+        userInfo.appendChild(userUserName);
+
+        const userWebSite = document.createElement("h4");
+        userWebSite.textContent = "Web site: " + user.website;
+        userInfo.appendChild(userWebSite);
+
+        userGeneralSection.appendChild(imgContainer);
+        userGeneralSection.appendChild(userInfo);
+        modalContainer.appendChild(userGeneralSection);
+        const hr = document.createElement("hr");
+        modalContainer.appendChild(hr);
+      };
+
+      const createUserAddressSection = (address) => {
+        const addressInfoContainer = document.createElement("div");
+        addressInfoContainer.classList.add("modal-address-container");
+
+        const addressInfo = document.createElement("div");
+
+        const titleSection = document.createElement("h3");
+        titleSection.textContent = "Location";
+        addressInfo.appendChild(titleSection);
+
+        const city = document.createElement("h4");
+        city.textContent = "City: " + address.city;
+        addressInfo.appendChild(city);
+
+        const street = document.createElement("h4");
+        street.textContent = "Street: " + address.street;
+        addressInfo.appendChild(street);
+
+        const suite = document.createElement("h4");
+        suite.textContent = "Suite: " + address.suite;
+        addressInfo.appendChild(suite);
+
+        const zipCode = document.createElement("h4");
+        zipCode.textContent = "Zip-Code: " + address.zipcode;
+        addressInfo.appendChild(zipCode);
+
+        addressInfoContainer.appendChild(addressInfo);
+
+        const src =
+          "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26168124.602385584!2d-87.96574692635446!3d33.49121227690882!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xa7c5ad2711135d1d!2zNDPCsDU3JzAzLjIiUyAzNMKwMjcnNDIuNSJX!5e0!3m2!1ses!2smx!4v1674084411509!5m2!1ses!2smx";
+
+        const iframe = document.createElement("iframe");
+        iframe.setAttribute("src", src);
+        iframe.setAttribute("width", "150");
+        iframe.setAttribute("height", "150");
+        iframe.setAttribute("frameborder", "0");
+        iframe.setAttribute("style", "border:0");
+        iframe.setAttribute("allowfullscreen", "");
+        addressInfoContainer.appendChild(iframe);
+
+        modalContainer.appendChild(addressInfoContainer);
+        const hr = document.createElement("hr");
+        modalContainer.appendChild(hr);
+      };
+
+      const createUserCompanySection = (company) => {
+        const companyInfoContainer = document.createElement("div");
+        companyInfoContainer.classList.add("modal-company-container");
+
+        const imgContainer = document.createElement("div");
+        imgContainer.classList.add("modal-avatar-cotainer");
+        const img = document.createElement("img");
+        img.src =
+          "https://cdn.pixabay.com/photo/2019/06/19/07/13/email-4284157_960_720.png";
+        img.classList.add("modal-avatar");
+        imgContainer.appendChild(img);
+
+        const companyInfo = document.createElement("div");
+
+        const titleSection = document.createElement("h3");
+        titleSection.textContent = "Company information";
+        companyInfo.appendChild(titleSection);
+
+        const name = document.createElement("h4");
+        name.textContent = "Name: " + company.name;
+        companyInfo.appendChild(name);
+
+        const bs = document.createElement("h4");
+        bs.textContent = "BS: " + company.bs;
+        companyInfo.appendChild(bs);
+
+        const catchPhrase = document.createElement("h4");
+        catchPhrase.textContent = "catch phrase: " + company.catchPhrase;
+        companyInfo.appendChild(catchPhrase);
+
+        companyInfoContainer.appendChild(imgContainer);
+        companyInfoContainer.appendChild(companyInfo);
+        modalContainer.appendChild(companyInfoContainer);
+      };
+    </script>
+  </body>
 </html>
