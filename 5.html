@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="5.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <title>Ejercicio 5</title>
   </head>
   <body class="container">
@@ -17,17 +21,6 @@
     <script>
       const modalContainer = document.getElementById("modal-details");
       modalContainer.innerHTML = "";
-
-      // document.addEventListener("click", (event) => {
-      //   if (
-      //     event.target !== modalContainer &&
-      //     modalContainer.style.display !== "none"
-      //   ) {
-      //     modalContainer.style.display = "none";
-      //   } else {
-      //     modalContainer.style.display !== "flex";
-      //   }
-      // });
 
       const xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function () {
@@ -74,13 +67,19 @@
       };
 
       const createModal = (user) => {
-        console.log("userData: ", user);
         modalContainer.innerHTML = "";
         modalContainer.classList.add("modal-container");
-
+        modalContainer.style.display = "block";
         createUserGeneralSection(user);
         createUserAddressSection(user.address);
         createUserCompanySection(user.company);
+
+        const button = document.createElement("button");
+        button.classList.add("close-button");
+        button.classList.add("fa");
+        button.classList.add("fa-close");
+        modalContainer.appendChild(button);
+        button.addEventListener("click", () => closeModal());
       };
 
       const createUserGeneralSection = (user) => {
@@ -206,6 +205,10 @@
         companyInfoContainer.appendChild(imgContainer);
         companyInfoContainer.appendChild(companyInfo);
         modalContainer.appendChild(companyInfoContainer);
+      };
+
+      const closeModal = () => {
+        modalContainer.style.display = "none";
       };
     </script>
   </body>
